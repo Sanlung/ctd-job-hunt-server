@@ -7,7 +7,7 @@ info:
     email: chungckao@gmail.com
   version: "1.0"
 servers:
-  - url: http://localhost:3001/api/v1
+  - url: https://job-hunt-organizer.herokuapp.com/api/v1
     variables: {}
 paths:
   /auth/register:
