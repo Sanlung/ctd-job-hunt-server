@@ -31,7 +31,7 @@ h1:hover {
 
 .navbar-brand {
   width: 6.5rem;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .navbar-brand:hover {
