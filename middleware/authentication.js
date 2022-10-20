@@ -6,7 +6,7 @@ const authenticateUser = async (req, res, next) => {
   //check header
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer")) {
-    throw new UnauthenticatedError("Authentication invalid");
+    throw new UnauthenticatedError("Authentication invalid.");
   }
 
   const token = authHeader.split(" ")[1];
@@ -21,7 +21,7 @@ const authenticateUser = async (req, res, next) => {
 
     next();
   } catch (err) {
-    throw new UnauthenticatedError("Authentication invalid");
+    throw new UnauthenticatedError("Authentication invalid.");
   }
 };
 

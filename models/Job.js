@@ -4,12 +4,12 @@ const JobSchema = new mongoose.Schema(
   {
     company: {
       type: String,
-      required: [true, "Please provide company name"],
+      required: [true, "Please provide company name."],
       maxLength: 30,
     },
     position: {
       type: String,
-      requried: [true, "Please provide the position"],
+      required: [true, "Please provide the position."],
       maxLength: 30,
     },
     location: {
@@ -24,7 +24,7 @@ const JobSchema = new mongoose.Schema(
       type: String,
       match: [
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "Please provide a valid email",
+        "Please provide a valid email.",
       ],
     },
     status: {
@@ -35,7 +35,7 @@ const JobSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
-      required: [true, "Please provide user info"],
+      required: [true, "Please provide user info."],
     },
   },
   {timestamps: true}
