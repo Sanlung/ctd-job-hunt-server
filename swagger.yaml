@@ -7,7 +7,7 @@ info:
     email: chungckao@gmail.com
   version: "1.0"
 servers:
-  - url: https://job-hunt-organizer.herokuapp.com/api/v1
+  - url: http://localhost:3001/api/v1
     variables: {}
 paths:
   /auth/register:
@@ -22,7 +22,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ""
+              $ref: "#/components/schemas/RegisterUserRequest"
             example:
               username: Chung Kao
               email: chungckao@gmail.com
@@ -46,7 +46,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ""
+              $ref: "#/components/schemas/LoginUserRequest"
             example:
               email: chungckao@gmail.com
               password: San#3Dragons?
@@ -69,7 +69,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ""
+              $ref: "#/components/schemas/CreateJobRequest"
             example:
               company: Zoom
               position: UI Designer
@@ -143,7 +143,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ""
+              $ref: "#/components/schemas/UpdateJobRequest"
             example:
               company: PayPal
               position: Full-stack Engineer
@@ -180,6 +180,67 @@ paths:
       security:
         - bearer: []
 components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - username
+        - email
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        username: Alex Wong
+        email: bobhunt@yahoo.com
+        password: secret
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - eamil
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: bobhunt@yahoo.com
+        password: secret
+    CreateJobRequest:
+      title: CreateJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: PayPal
+        position: Software Engineer
+    UpdateJobRequest:
+      title: UpdateJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Google
+        position: UI Designer
   securitySchemes:
     bearer:
       type: http
@@ -187,6 +248,6 @@ components:
 security: []
 tags:
   - name: Auth
-    description: ""
+    description: User regiustration and login
   - name: Jobs
-    description: ""
+    description: CRUD operations on job entries
