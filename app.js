@@ -33,7 +33,7 @@ app.use(
   })
 );
 // load React /build/index.html first
-app.use(express.static(path.join(__dirname, "..", "build")));
+// app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(helmet());
@@ -51,9 +51,9 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 // pick up client-side routes from /build/index.html
-app.use((req, res, next) =>
-  res.sendFile(path.join(__dirname, "..", "build", "index.html"))
-);
+// app.use((req, res, next) =>
+//   res.sendFile(path.join(__dirname, "..", "build", "index.html"))
+// );
 
 const port = process.env.PORT || 3001;
 
