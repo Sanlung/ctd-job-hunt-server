@@ -1,6 +1,6 @@
 const path = require("path");
 
-const notFound = (req, res) =>
+const notFoundMiddleware = (req, res) =>
   res.status(404).sendFile(path.join(__dirname, "..", "public", "404.html"));
 
-module.exports = notFound;
+module.exports = notFoundMiddleware;
