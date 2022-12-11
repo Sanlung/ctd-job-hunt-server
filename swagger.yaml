@@ -11,8 +11,6 @@ servers:
     description: Development local server
   - url: https://ctd-jobhuntapp.onrender.com/api/v1
     description: Production server on render.com
-  - url: https://job-hunt-organizer.herokuapp.com/api/v1
-    description: Production server on heroku.com
 paths:
   /auth/register:
     post:
@@ -91,12 +89,18 @@ paths:
     get:
       tags:
         - Jobs
-      summary: Get All Jobs
-      operationId: GetAllJobs
-      parameters: []
+      summary: Get 10 Jobs
+      operationId: Get10Jobs
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: The page number
       responses:
         "200":
-          description: Fetched all jobs
+          description: Fetched 10 jobs
           headers: {}
       deprecated: false
       security:

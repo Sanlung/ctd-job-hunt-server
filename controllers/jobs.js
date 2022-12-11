@@ -2,8 +2,12 @@ const Job = require("../models/Job");
 const {StatusCodes} = require("http-status-codes");
 const {BadRequestError, NotFoundError} = require("../errors");
 
-const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({createdBy: req.user.userId}).sort("-createdAt");
+const get10Jobs = async (req, res) => {
+  const page = req.query.page;
+  const jobs = await Job.find({createdBy: req.user.userId})
+    .sort("-createdAt")
+    .skip(page * 10 - 10)
+    .limit(10);
   res.status(StatusCodes.OK).json({jobs, count: jobs.length});
 };
 
@@ -59,7 +63,7 @@ const deleteJob = async (req, res) => {
 };
 
 module.exports = {
-  getAllJobs,
+  get10Jobs,
   getJob,
   createJob,
   updateJob,
