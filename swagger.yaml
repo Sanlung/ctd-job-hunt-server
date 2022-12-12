@@ -100,7 +100,7 @@ paths:
           description: The page number
       responses:
         "200":
-          description: Fetched 10 jobs
+          description: Fetched 10 & total count of jobs
           headers: {}
       deprecated: false
       security:

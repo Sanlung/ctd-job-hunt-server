@@ -4,11 +4,12 @@ const {BadRequestError, NotFoundError} = require("../errors");
 
 const get10Jobs = async (req, res) => {
   const page = req.query.page;
+  const count = await Job.find({createdBy: req.user.userId}).countDocuments();
   const jobs = await Job.find({createdBy: req.user.userId})
     .sort("-createdAt")
     .skip(page * 10 - 10)
     .limit(10);
-  res.status(StatusCodes.OK).json({jobs, count: jobs.length});
+  res.status(StatusCodes.OK).json({jobs, count: count});
 };
 
 const getJob = async (req, res) => {
