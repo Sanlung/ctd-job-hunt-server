@@ -9,7 +9,7 @@ info:
 servers:
   - url: http://localhost:3001/api/v1
     description: Development local server
-  - url: https://ctd-jobhuntapp.onrender.com/api/v1
+  - url: https://ctdjobhuntapp.onrender.com/api/v1
     description: Production server on render.com
 paths:
   /auth/register:
