@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: JobHunt API
-  description: A simple API to authenticate user and access JobHunt app info
+  title: Job Hunt App API
+  description: Job Hunt is a job application organizer-tarcker bootstrapped with `create-react-app` on a MERN stack application. This simple API serves to authenticate user and access the Job Hunt app data.
   contact:
     name: Chung Kao
     email: chungckao@gmail.com
@@ -18,9 +18,10 @@ paths:
         - Auth
       summary: Register User
       operationId: RegisterUser
+      desctiption: Create user account and return JWT token for accessing user data
       parameters: []
       requestBody:
-        description: Username, email and password
+        description: `username`, `email` and `password` are required
         content:
           application/json:
             schema:
@@ -32,8 +33,15 @@ paths:
         required: true
       responses:
         "201":
-          description: User created
-          headers: {}
+          description: Created - returns an user object and JWT tiken
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterUserResponse"
+              example:
+                user:
+                  username: Chung Kao
+                token: jwtToken#$@)345...
       deprecated: false
       security: []
   /auth/login:
@@ -42,9 +50,10 @@ paths:
         - Auth
       summary: Login User
       operationId: LoginUser
+      description: Log user into app and return JWT token for accessing user data
       parameters: []
       requestBody:
-        description: User email and password
+        description: `email` and `password` are required
         content:
           application/json:
             schema:
@@ -55,8 +64,15 @@ paths:
         required: true
       responses:
         "200":
-          description: User logged in
-          headers: {}
+          description: OK - returns an user object and JWT token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginUserResponse"
+              example:
+                user:
+                  username: Chung Kao
+                token: jwtToken#$@)345...
       deprecated: false
       security: []
   /jobs:
@@ -65,9 +81,10 @@ paths:
         - Jobs
       summary: Create Job
       operationId: CreateJob
+      description: Create a job entry and return a job object
       parameters: []
       requestBody:
-        description: Company and position are required
+        description: `company` and `position` are required
         content:
           application/json:
             schema:
@@ -80,9 +97,25 @@ paths:
               email: maryalice@zoom.com
         required: true
       responses:
-        "200":
-          description: Job created
-          headers: {}
+        "201":
+          description: OK - returns a job object
+          content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateJobResponse"
+            example:
+              job:
+                company: Zoom
+                position: UI Designer
+                location: Mountain View, CA
+                contact: Mary Alice
+                email: maryalice@zoom.com
+                status: applied
+                createdBy: 6331d12dfe32d84c7292132c
+                _id: 640ccab1ba64c28c5cbf64b0
+                createdAt: 2023-03-11T18:38:41.939Z
+                updatedAt: 2023-03-11T18:38:41.939Z
+                __v: 0
       deprecated: false
       security:
         - bearer: []
@@ -100,8 +133,36 @@ paths:
           description: The page number
       responses:
         "200":
-          description: Fetched 10 & total count of jobs
-          headers: {}
+          description: OK - returns a jobs object and jobs count
+          content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Get10JobsResponse"
+            example:
+              jobs:
+                - company: Zoom
+                  position: UI Designer
+                  location: Mountain View, CA
+                  contact: Mary Alice
+                  email: maryalice@zoom.com
+                  status: applied
+                  createdBy: 6331d12dfe32d84c7292132c
+                  _id: 640ccab1ba64c28c5cbf64b0
+                  createdAt: 2023-03-11T18:38:41.939Z
+                  updatedAt: 2023-03-11T18:38:41.939Z
+                  __v: 0
+                - company: PayPal
+                  position: Frontend Engineer
+                  location: San Jose, CA
+                  contact: John Gannon
+                  email: jogngannon@paypal.com
+                  status: declined
+                  createdBy: 6351d12dfe32d84c7292132c
+                  _id: 650ccab1ba64c28c5cbf64b0
+                  createdAt: 2023-03-11T18:38:41.939Z
+                  updatedAt: 2023-03-11T18:38:41.939Z
+                  __v: 0
+              count: 2
       deprecated: false
       security:
         - bearer: []
@@ -121,15 +182,31 @@ paths:
       parameters:
         - name: id
           in: path
-          description: "The job ID"
+          description: The job ID
           required: true
           style: simple
           schema:
             type: string
       responses:
         "200":
-          description: Fetched job
-          headers: {}
+          description: OK - returns a job object
+          content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSingleJobResponse"
+            example:
+              job:
+                company: Zoom
+                position: UI Designer
+                location: Mountain View, CA
+                contact: Mary Alice
+                email: maryalice@zoom.com
+                status: applied
+                createdBy: 6331d12dfe32d84c7292132c
+                _id: 640ccab1ba64c28c5cbf64b0
+                createdAt: 2023-03-11T18:38:41.939Z
+                updatedAt: 2023-03-11T18:38:41.939Z
+                __v: 0
       deprecated: false
       security:
         - bearer: []
@@ -141,13 +218,13 @@ paths:
       parameters:
         - name: id
           in: path
-          description: "The job ID"
+          description: The job ID
           required: true
           style: simple
           schema:
             type: string
       requestBody:
-        description: Company and position are required
+        description: `company` and `position` are required
         content:
           application/json:
             schema:
@@ -162,8 +239,24 @@ paths:
         required: true
       responses:
         "200":
-          description: Updated job
-          headers: {}
+          description: OK - returns a job object
+          content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateJobResponse"
+            example:
+              job:
+                company: PayPal
+                position: Full-stack Engineer
+                location: San Jose, CA
+                contact: John Gannon
+                email: johngannon@paypal.com
+                status: interviewed
+                createdBy: 6331d12dfe32d84c7292132c
+                _id: 640ccab1ba64c28c5cbf64b0
+                createdAt: 2023-03-11T18:38:41.939Z
+                updatedAt: 2023-03-11T18:38:41.939Z
+                __v: 0
       deprecated: false
       security:
         - bearer: []
@@ -175,15 +268,20 @@ paths:
       parameters:
         - name: id
           in: path
-          description: "The job ID"
+          description: The job ID
           required: true
           style: simple
           schema:
             type: string
       responses:
         "200":
-          description: Deleted job
-          headers: {}
+          description: OK - returns a success msg
+          content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteJobResponse"
+            example:
+              msg: Job ID no. 640ccab1ba64c28c5cbf64b0 has been deleted
       deprecated: false
       security:
         - bearer: []
@@ -204,9 +302,24 @@ components:
         password:
           type: string
       example:
-        username: Alex Wong
-        email: bobhunt@yahoo.com
-        password: secret
+        username: Chung Kao
+        email: chungckao@gmail.com
+        password: secret#%@
+    RegisterUserRresponse:
+      title: RegisterUserRresponse
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            username:
+              type: string
+        token:
+          type: string
+      example:
+        user:
+          username: Chung Kao
+        toekn: jwtToken#$@)345..
     LoginUserRequest:
       title: LoginUserRequest
       required:
@@ -219,8 +332,23 @@ components:
         password:
           type: string
       example:
-        email: bobhunt@yahoo.com
-        password: secret
+        email: chungckao@gmail.com
+        password: secret#%@
+    LoginUserRresponse:
+      title: LoginUserRresponse
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            username:
+              type: string
+        token:
+          type: string
+      example:
+        user:
+          username: Chung Kao
+        toekn: jwtToken#$@)345..
     CreateJobRequest:
       title: CreateJobRequest
       required:
@@ -232,9 +360,163 @@ components:
           type: string
         position:
           type: string
+        location:
+          type: string
+        contact:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
       example:
-        company: PayPal
-        position: Software Engineer
+        company: Zoom
+        position: UI Designer
+        location: Mountain View, CA
+        contact: Mary Alice
+        email: maryalice@zoom.com
+        status: applied,
+    CreateJobResponse:
+      title: CreateJobResponse
+      type: object
+      properties:
+        job:
+          type: object
+          properties:
+            company:
+              type: string
+            position:
+              type: string
+            location:
+              type: string
+            contact:
+              type: string
+            email:
+              type: string
+            status:
+              type: string
+            createdBy:
+              type: string
+            _id:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            __v:
+              type: number
+      example:
+        job:
+          company: Zoom
+          position: UI Designer
+          location: Mountain View, CA
+          contact: Mary Alice
+          email: maryalice@zoom.com
+          status: applied
+          createdBy: 6331d12dfe32d84c7292132c
+          _id: 640ccab1ba64c28c5cbf64b0
+          createdAt: 2023-03-11T18:38:41.939Z
+          updatedAt: 2023-03-11T18:38:41.939Z
+          __v: 0
+    Get10JobsResponse:
+      title: Get10JobsResponse
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            type: object
+            properties:
+              company:
+                type: string
+              position:
+                type: string
+              location:
+                type: string
+              contact:
+                type: string
+              email:
+                type: string
+              status:
+                type: string
+              createdBy:
+                type: string
+              _id:
+                type: string
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+              __v:
+                type: number
+        count:
+          type: number
+      example:
+        jobs:
+          - company: Zoom
+            position: UI Designer
+            location: Mountain View, CA
+            contact: Mary Alice
+            email: maryalice@zoom.com
+            status: applied
+            createdBy: 6331d12dfe32d84c7292132c
+            _id: 640ccab1ba64c28c5cbf64b0
+            createdAt: 2023-03-11T18:38:41.939Z
+            updatedAt: 2023-03-11T18:38:41.939Z
+            __v: 0
+          - company: PayPal
+            position: Frontend Engineer
+            location: Mountain View, CA
+            contact: John Gannon
+            email: jogngannon@paypal.com
+            status: declined
+            createdBy: 6351d12dfe32d84c7292132c
+            _id: 650ccab1ba64c28c5cbf64b0
+            createdAt: 2023-03-11T18:38:41.939Z
+            updatedAt: 2023-03-11T18:38:41.939Z
+            __v: 0
+        count: 2
+    GetSingleJobResponse:
+      title: GetSingleJobResponse
+      type: object
+      properties:
+        job:
+          type: object
+          properties:
+            company:
+              type: string
+            position:
+              type: string
+            location:
+              type: string
+            contact:
+              type: string
+            email:
+              type: string
+            status:
+              type: string
+            createdBy:
+              type: string
+            _id:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            __v:
+              type: number
+      example:
+        job:
+          company: Zoom
+          position: UI Designer
+          location: Mountain View, CA
+          contact: Mary Alice
+          email: maryalice@zoom.com
+          status: applied
+          createdBy: 6331d12dfe32d84c7292132c
+          _id: 640ccab1ba64c28c5cbf64b0
+          createdAt: 2023-03-11T18:38:41.939Z
+          updatedAt: 2023-03-11T18:38:41.939Z
+          __v: 0
     UpdateJobRequest:
       title: UpdateJobRequest
       required:
@@ -246,9 +528,71 @@ components:
           type: string
         position:
           type: string
+        location:
+          type: string
+        contact:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
       example:
-        company: Google
-        position: UI Designer
+        company: PayPal
+        position: Full-stack Engineer
+        location: San Jose, CA
+        contact: John Gannon
+        email: johngannon@paypal.com
+        status: interviewed
+    UpdateJobResponse:
+      title: UpdateJobResponse
+      type: object
+      properties:
+        job:
+          type: object
+          properties:
+            company:
+              type: string
+            position:
+              type: string
+            location:
+              type: string
+            contact:
+              type: string
+            email:
+              type: string
+            status:
+              type: string
+            createdBy:
+              type: string
+            _id:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            __v:
+              type: number
+      example:
+        job:
+          company: PayPal
+          position: Full-stack Engineer
+          location: San Jose, CA
+          contact: John Gannon
+          email: johngannon@paypal.com
+          status: interviewed
+          createdBy: 6331d12dfe32d84c7292132c
+          _id: 640ccab1ba64c28c5cbf64b0
+          createdAt: 2023-03-11T18:38:41.939Z
+          updatedAt: 2023-03-11T18:38:41.939Z
+          __v: 0
+    DeleteJobResponse:
+      title: DeleteJobResponse
+      type: object
+      properties:
+        msg:
+          type: string
+      example:
+        msg: Job ID no. 640ccab1ba64c28c5cbf64b0 has been deleted
   securitySchemes:
     bearer:
       type: http
@@ -256,6 +600,6 @@ components:
 security: []
 tags:
   - name: Auth
-    description: User regiustration and login
+    description: User registration and login
   - name: Jobs
-    description: CRUD operations on job entries
+    description: CRUD operations on job data
